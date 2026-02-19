@@ -6,7 +6,7 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 10:39:16 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/18 16:14:14 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/19 08:50:03 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,33 +64,4 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (res * sign);
-}
-
-void	add_back(t_node **stack, t_node *new)
-{
-	t_node	*tmp;
-
-	if (!stack || !new)
-		return ;
-	if (*stack == NULL)
-	{
-		*stack = new;
-		return ;
-	}
-	tmp = *stack;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = new;
-}
-
-t_node	*new_node(int value)
-{
-	t_node	*node;
-
-	node = malloc(sizeof(t_node));
-	if (!node)
-		return (NULL);
-	node->value = value;
-	node->next = NULL;
-	return (node);
 }
