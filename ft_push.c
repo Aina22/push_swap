@@ -6,7 +6,7 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 09:59:45 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/12 15:17:04 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/19 16:18:52 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,23 @@ void	ft_pa_pb(t_node **from, t_node **to)
 {
 	t_node	*tmp;
 
-	if (!from)
+	if (!from || !*from)
 		return ;
 	tmp = *from;
 	*from = (*from)->next;
 	tmp->next = *to;
 	*to = tmp;
 }
+
+void	ft_pb(t_node **a, t_node **b)
+{
+	ft_pa_pb(a, b);
+	write(1, "pb\n", 3);
+}
+
+void	ft_pa(t_node **b, t_node **a)
+{
+	ft_pa_pb(b, a);
+	write(1, "pa\n", 3);
+}
+

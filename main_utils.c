@@ -6,7 +6,7 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 10:39:16 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/19 08:50:03 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/19 13:24:30 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,31 @@ int	is_number(const char *str)
 	return (i > 0 && !(str[0] == '-' && !str[1]));
 }
 
-int	ft_atoi(const char *str)
+void	add_back(t_node **stack, t_node *new)
 {
-	int	res;
-	int	sign;
-	int	i;
+	t_node	*tmp;
 
-	res = 0;
-	sign = 1;
-	i = 0;
-	if (str[i] == '-')
+	if (!stack || !new)
+		return ;
+	if (*stack == NULL)
 	{
-		sign = -1;
-		i++;
+		*stack = new;
+		return ;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = res * 10 + (str[i] - '0');
-		i++;
-	}
-	return (res * sign);
+	tmp = *stack;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+}
+
+t_node	*new_node(int value)
+{
+	t_node	*node;
+
+	node = malloc(sizeof(t_node));
+	if (!node)
+		return (NULL);
+	node->value = value;
+	node->next = NULL;
+	return (node);
 }

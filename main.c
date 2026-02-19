@@ -6,7 +6,7 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 17:26:24 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/18 17:26:26 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/19 13:39:04 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,14 @@ int	main(int ac, char **av)
 
 	a = NULL;
 	b = NULL;
-	flag = (ac > 1 && is_valid_flag(av[1])) ? av[1] : NULL;
-	i = flag ? 2 : 1;
+	if (ac > 1 && is_valid_flag(av[1]))
+		flag = av[1];
+	else
+		flag = NULL;
+	if (flag)
+		i = 2;
+	else
+		i = 1;
 	while (i < ac)
 	{
 		if ((av[i][0] >= '0' && av[i][0] <= '9') || av[i][0] == '-')

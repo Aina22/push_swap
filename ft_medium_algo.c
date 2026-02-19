@@ -6,12 +6,15 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 16:45:41 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/17 13:56:20 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/19 17:11:01 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+void	add_back(t_node **stack, t_node *new);
+t_node	*new_node(int value);
+void	print_stack(t_node *stack);
 static void	sort_array(int *arr, int size)
 {
 	int	tmp;
@@ -105,3 +108,20 @@ void	ft_medium_algo(t_node **a, t_node **b)
 	}
 	free(array);
 }
+
+// int main(void)
+// {
+// 	t_node	*stack_a = NULL;
+// 	t_node	*stack_b = NULL;
+
+// 	add_back(&stack_a, new_node(2));
+// 	add_back(&stack_a, new_node(5));
+// 	add_back(&stack_a, new_node(4));
+// 	add_back(&stack_a, new_node(3));
+
+// 	ft_medium_algo(&stack_a, &stack_b);
+// 	print_stack(stack_a);
+// 	print_stack(stack_b);
+
+// 	return (0);
+// }

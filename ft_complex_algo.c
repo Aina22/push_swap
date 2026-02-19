@@ -6,30 +6,22 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 11:23:56 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/17 13:20:26 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/19 16:49:49 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	get_max_bits(t_node *s)
+static int	get_max_bits(int size)
 {
-	int	m;
-	int	b;
+	int	max_num;
+	int	bits;
 
-	m = 0;
-	b = 0;
-	while (s)
-	{
-		if (s->value > m)
-			m = s->value;
-		if (m < 0)
-			break ;
-		s = s->next;
-	}
-	while (m >> b)
-		b++;
-	return (b);
+	max_num = size - 1;
+	bits = 0;
+	while (max_num >> bits)
+		bits++;
+	return (bits);
 }
 
 static int	stack_size(t_node *s)
@@ -42,42 +34,64 @@ static int	stack_size(t_node *s)
 	return (i);
 }
 
-static void	ft_pb(t_node **a, t_node **b)
+static int	count_smaller(t_node *stack, int target_value)
 {
-	ft_pa_pb(a, b);
-	write(1, "pb\n", 3);
+	int	count;
+
+	count = 0;
+	while (stack)
+	{
+		if (stack->value < target_value)
+			count++;
+		stack = stack->next;
+	}
+	return (count);
 }
 
-static void	ft_pa(t_node **b, t_node **a)
+static void	normalize_to_indices(t_node **stack)
 {
-	ft_pa_pb(b, a);
-	write(1, "pa\n", 3);
+	t_node	*current;
+	int		original_value;
+	int		index;
+
+	current = *stack;
+	while (current)
+	{
+		original_value = current->value;
+		index = count_smaller(*stack, original_value);
+		current->value = index;
+		current = current->next;
+	}
 }
 
 void	ft_complex_algo(t_node **a, t_node **b)
 {
+	int	bit;
+	int	max_bits;
+	int	pushed;
+	int	size;
 	int	i;
-	int	j;
-	int	mb;
-	int	sz;
 
-	sz = stack_size(*a);
-	mb = get_max_bits(*a);
-	i = -1;
-	while (++i < mb)
+	bit = 0;
+	size = stack_size(*a);
+	normalize_to_indices(a);
+	max_bits = get_max_bits(size);
+	while (bit < max_bits)
 	{
-		j = -1;
-		while (++j < sz)
+		i = 0;
+		pushed = 0;
+		while (i++ < size)
 		{
-			if ((((*a)->value >> i) & 1) == 0)
-				ft_pb(a, b);
-			else
+			if ((((*a)->value >> bit) & 1) == 0)
 			{
-				ft_ra_rb(a);
-				write(1, "ra\n", 3);
+				ft_pb(a, b);
+				pushed++;
 			}
+			else
+				ft_ra(a);
 		}
-		while (*b)
-			ft_pa(b, a);
+		while (pushed--)
+			ft_pa(a, b);
+		bit++;
 	}
 }
