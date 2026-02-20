@@ -6,15 +6,12 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 16:45:41 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/19 17:11:01 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/20 11:48:41 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	add_back(t_node **stack, t_node *new);
-t_node	*new_node(int value);
-void	print_stack(t_node *stack);
 static void	sort_array(int *arr, int size)
 {
 	int	tmp;
@@ -59,69 +56,60 @@ static int	*create_sort_array(int size, t_node *top)
 	return (arr);
 }
 
-static void	push_chunks_to_b(t_node **a, t_node **b, int *arr, int size)
+static void	push_back_to_a(t_node **a, t_node **b)
 {
-	int	chunk;
-	int	start;
-	int	end;
-	int	found;
+	int	max_val;
+	int	size;
+	int	pos;
 
-	chunk = 10;
-	start = 0;
-	while (start < size)
+	while (*b)
 	{
-		end = calc_end_idx(start, chunk, size);
-		found = 0;
-		while (found++ < end - start)
+		max_val = find_max(b);
+		size = count_stack(b);
+		pos = get_pos_in_stack(*b, max_val);
+		if (pos <= size / 2)
 		{
-			if (is_in_chunk((*a)->value, arr, start, end))
-			{
-				ft_pa_pb(a, b);
-				write(1, "pb\n", 3);
-			}
-			else
-				ft_ra(a);
+			while ((*b)->value != max_val)
+				ft_rb(b);
 		}
-		start += chunk;
+		else
+		{
+			while ((*b)->value != max_val)
+				ft_rrb(b);
+		}
+		ft_pa(a, b);
 	}
 }
 
 void	ft_medium_algo(t_node **a, t_node **b)
 {
-	int	total_size;
-	int	*array;
-	int	max_val;
+	int	*arr;
+	int	size;
+	int	i;
+	int	chunk;
 
-	total_size = count_stack(a);
-	array = create_sort_array(total_size, *a);
-	push_chunks_to_b(a, b, array, total_size);
-	while (*b != NULL)
+	size = count_stack(a);
+	arr = create_sort_array(size, *a);
+	if (!arr)
+		return ;
+	i = 0;
+	chunk = 15;
+	while (*a)
 	{
-		max_val = find_max(b);
-		while ((*b)->value != max_val)
+		if ((*a)->value <= arr[i])
 		{
-			ft_ra_rb(b);
-			write(1, "rb\n", 3);
+			ft_pb(b, a);
+			ft_rb(b);
+			i++;
 		}
-		ft_pa_pb(b, a);
-		write(1, "pa\n", 3);
+		else if (i + chunk < size && (*a)->value <= arr[i + chunk])
+		{
+			ft_pb(b, a);
+			i++;
+		}
+		else
+			ft_ra(a);
 	}
-	free(array);
+	push_back_to_a(a, b);
+	free(arr);
 }
-
-// int main(void)
-// {
-// 	t_node	*stack_a = NULL;
-// 	t_node	*stack_b = NULL;
-
-// 	add_back(&stack_a, new_node(2));
-// 	add_back(&stack_a, new_node(5));
-// 	add_back(&stack_a, new_node(4));
-// 	add_back(&stack_a, new_node(3));
-
-// 	ft_medium_algo(&stack_a, &stack_b);
-// 	print_stack(stack_a);
-// 	print_stack(stack_b);
-
-// 	return (0);
-// }

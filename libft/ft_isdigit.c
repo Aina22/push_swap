@@ -6,10 +6,9 @@
 /*   By: yvoandri <yvoandri@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:36:17 by yvoandri          #+#    #+#             */
-/*   Updated: 2026/02/08 15:36:32 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/20 08:42:26 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 int	ft_isdigit(int c)
 {

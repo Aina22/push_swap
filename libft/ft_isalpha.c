@@ -6,10 +6,9 @@
 /*   By: yvoandri <yvoandri@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:30:59 by yvoandri          #+#    #+#             */
-/*   Updated: 2026/02/08 15:31:18 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/20 08:42:44 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 int	ft_isalpha(int c)
 {

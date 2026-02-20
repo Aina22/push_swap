@@ -6,48 +6,74 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:58:32 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/17 15:06:36 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/20 09:37:10 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	min_list(t_node **stack_a)
+static void	sort_three(t_node **a)
 {
-	int		min;
-	t_node	*current;
+	int	first;
+	int	second;
+	int	third;
 
-	if (!stack_a)
-		return (0);
-	min = (*stack_a)->value;
-	current = (*stack_a)->next;
-	while (current != NULL)
+	first = (*a)->value;
+	second = (*a)->next->value;
+	third = (*a)->next->next->value;
+	if (first > second && second < third && first < third)
+		ft_sa(a);
+	else if (first > second && second > third)
 	{
-		if (current->value < min)
-			min = current->value;
-		current = current->next;
+		ft_sa(a);
+		ft_rra(a);
 	}
-	return (min);
+	else if (first > second && second < third && first > third)
+		ft_ra(a);
+	else if (first < second && second > third && first < third)
+	{
+		ft_sa(a);
+		ft_ra(a);
+	}
+	else if (first < second && second > third && first > third)
+		ft_rra(a);
+}
+
+static void	sort_small(t_node **a, t_node **b)
+{
+	int	min;
+
+	while (count_stack(a) > 3)
+	{
+		min = find_min(a);
+		while ((*a)->value != min)
+		{
+			if (get_pos_in_stack(*a, min) <= count_stack(a) / 2)
+				ft_ra(a);
+			else
+				ft_rra(a);
+		}
+		ft_pb(b, a);
+	}
+	sort_three(a);
+	while (*b)
+		ft_pa(a, b);
 }
 
 void	ft_simple_algo(t_node **stack_a, t_node **stack_b)
 {
-	int	min;
+	int	size;
 
-	while (*stack_a)
+	size = count_stack(stack_a);
+	if (size <= 1)
+		return ;
+	if (size == 2)
 	{
-		min = min_list(stack_a);
-		while ((*stack_a)->value != min)
-		{
-			ft_ra_rb(stack_a);
-			write(1, "ra\n", 3);
-		}
-		ft_pa_pb(stack_a, stack_b);
-		write(1, "pb\n", 3);
+		if ((*stack_a)->value > (*stack_a)->next->value)
+			ft_sa(stack_a);
 	}
-	while (*stack_b)
-	{
-		ft_pa_pb(stack_b, stack_a);
-		write(1, "pa\n", 3);
-	}
+	else if (size == 3)
+		sort_three(stack_a);
+	else
+		sort_small(stack_a, stack_b);
 }

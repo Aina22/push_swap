@@ -6,7 +6,7 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 17:26:24 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/19 13:39:04 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/20 11:07:28 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ static void	exec_algo(char *flag, t_node **a, t_node **b)
 
 static void	parse_str(char *str, t_node **a)
 {
-	int		num;
-	int		sign;
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -46,19 +44,16 @@ static void	parse_str(char *str, t_node **a)
 			i++;
 		if (!str[i])
 			break ;
-		num = 0;
-		sign = 1;
-		if (str[i] == '-')
+		if ((str[i] >= '0' && str[i] <= '9') || str[i] == '-')
 		{
-			sign = -1;
-			i++;
+			add_back(a, new_node(ft_atoi(&str[i])));
+			if (str[i] == '-')
+				i++;
+			while (str[i] >= '0' && str[i] <= '9')
+				i++;
 		}
-		while (str[i] >= '0' && str[i] <= '9')
-		{
-			num = num * 10 + (str[i] - '0');
+		else
 			i++;
-		}
-		add_back(a, new_node(num * sign));
 	}
 }
 
@@ -71,18 +66,15 @@ int	main(int ac, char **av)
 
 	a = NULL;
 	b = NULL;
+	flag = NULL;
 	if (ac > 1 && is_valid_flag(av[1]))
 		flag = av[1];
-	else
-		flag = NULL;
+	i = 1;
 	if (flag)
 		i = 2;
-	else
-		i = 1;
 	while (i < ac)
 	{
-		if ((av[i][0] >= '0' && av[i][0] <= '9') || av[i][0] == '-')
-			parse_str(av[i], &a);
+		parse_str(av[i], &a);
 		i++;
 	}
 	if (flag)
