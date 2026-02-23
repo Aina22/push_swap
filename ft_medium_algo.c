@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 16:45:41 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/20 11:48:41 by yvoandri         ###   ########.fr       */
+/*   Created: 2026/02/23 11:05:38 by ainradan          #+#    #+#             */
+/*   Updated: 2026/02/23 11:05:39 by ainradan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "push_swap.h"
+#include "bench.h"
 
 static void	sort_array(int *arr, int size)
 {
@@ -56,7 +58,7 @@ static int	*create_sort_array(int size, t_node *top)
 	return (arr);
 }
 
-static void	push_back_to_a(t_node **a, t_node **b)
+static void	push_back_to_a(t_node **a, t_node **b, t_bench *bench)
 {
 	int	max_val;
 	int	size;
@@ -70,18 +72,18 @@ static void	push_back_to_a(t_node **a, t_node **b)
 		if (pos <= size / 2)
 		{
 			while ((*b)->value != max_val)
-				ft_rb(b);
+				ft_rb(b, bench);
 		}
 		else
 		{
 			while ((*b)->value != max_val)
-				ft_rrb(b);
+				ft_rrb(b, bench);
 		}
-		ft_pa(a, b);
+		ft_pa(a, b, bench);
 	}
 }
 
-void	ft_medium_algo(t_node **a, t_node **b)
+void	ft_medium_algo(t_node **a, t_node **b, t_bench *bench)
 {
 	int	*arr;
 	int	size;
@@ -98,18 +100,18 @@ void	ft_medium_algo(t_node **a, t_node **b)
 	{
 		if ((*a)->value <= arr[i])
 		{
-			ft_pb(b, a);
-			ft_rb(b);
+			ft_pb(b, a, bench);
+			ft_rb(b, bench);
 			i++;
 		}
 		else if (i + chunk < size && (*a)->value <= arr[i + chunk])
 		{
-			ft_pb(b, a);
+			ft_pb(b, a, bench);
 			i++;
 		}
 		else
-			ft_ra(a);
+			ft_ra(a, bench);
 	}
-	push_back_to_a(a, b);
+	push_back_to_a(a, b, bench);
 	free(arr);
 }

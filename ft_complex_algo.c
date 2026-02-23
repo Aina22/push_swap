@@ -5,112 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 11:23:56 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/20 13:02:13 by yvoandri         ###   ########.fr       */
+/*   Created: 2026/02/23 11:05:33 by ainradan          #+#    #+#             */
+/*   Updated: 2026/02/23 11:05:34 by ainradan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "push_swap.h"
+#include "bench.h"
 
-// static int	stack_size(t_node *s)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s && ++i)
-// 		s = s->next;
-// 	return (i);
-// }
-
-static int	count_smaller(t_node *stack, int target_value)
+static void	quick_sort(int *arr, int low, int high)
 {
-	int	count;
+	int	pivot;
+	int	i;
+	int	j;
+	int	temp;
 
-	count = 0;
-	while (stack)
+	if (low < high)
 	{
-		if (stack->value < target_value)
-			count++;
-		stack = stack->next;
-	}
-	return (count);
-}
-
-static void	normalize_to_indices(t_node **stack)
-{
-	t_node	*current;
-	int		original_value;
-	int		index;
-
-	current = *stack;
-	while (current)
-	{
-		original_value = current->value;
-		index = count_smaller(*stack, original_value);
-		current->value = index;
-		current = current->next;
+		pivot = arr[high];
+		i = low - 1;
+		j = low;
+		while (j < high)
+		{
+			if (arr[j] < pivot)
+			{
+				i++;
+				temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+			}
+			j++;
+		}
+		temp = arr[i + 1];
+		arr[i + 1] = arr[high];
+		arr[high] = temp;
+		quick_sort(arr, low, i);
+		quick_sort(arr, i + 2, high);
 	}
 }
 
-// static int	get_max_bits(int size)
-// {
-// 	int	max_num;
-// 	int	bits;
+static void	normalize_to_indices(t_node **stack, int size)
+{
+	int		*tmp;
+	int		i;
+	t_node	*curr;
 
-// 	max_num = size - 1;
-// 	bits = 0;
-// 	while (max_num >> bits)
-// 		bits++;
-// 	return (bits);
-// }
-
-// static void	process_bit(t_node **a, t_node **b, int bit, int size)
-// {
-// 	int	operations;
-// 	int	pushed;
-
-// 	operations = 0;
-// 	pushed = 0;
-// 	while (operations < size)
-// 	{
-// 		if (!*a)
-// 			break ;
-// 		if ((((*a)->value >> bit) & 1) == 0)
-// 		{
-// 			ft_pb(a, b);
-// 			pushed++;
-// 		}
-// 		else
-// 			ft_ra(a);
-// 		operations++;
-// 	}
-// 	while (pushed > 0)
-// 	{
-// 		ft_pa(a, b);
-// 		pushed--;
-// 	}
-// }
-
-// void	ft_complex_algo(t_node **a, t_node **b)
-// {
-// 	int	bit;
-// 	int	max_bits;
-// 	int	size;
-
-// 	if (!a || !*a)
-// 		return ;
-// 	size = stack_size(*a);
-// 	if (size <= 1)
-// 		return ;
-// 	normalize_to_indices(a);
-// 	max_bits = get_max_bits(size);
-// 	bit = 0;
-// 	while (bit < max_bits)
-// 	{
-// 		process_bit(a, b, bit, size);
-// 		bit++;
-// 	}
-// }
+	tmp = malloc(sizeof(int) * size);
+	if (!tmp)
+		return ;
+	curr = *stack;
+	i = 0;
+	while (i < size)
+	{
+		tmp[i++] = curr->value;
+		curr = curr->next;
+	}
+	quick_sort(tmp, 0, size - 1);
+	curr = *stack;
+	while (curr)
+	{
+		i = 0;
+		while (i < size)
+		{
+			if (curr->value == tmp[i])
+			{
+				curr->index = i;
+				break ;
+			}
+			i++;
+		}
+		curr = curr->next;
+	}
+	free(tmp);
+}
 
 static int	get_max_bits(int size)
 {
@@ -122,24 +90,24 @@ static int	get_max_bits(int size)
 	return (bits);
 }
 
-static void	process_bit(t_node **a, t_node **b, int bit, int size)
+static void	process_bit(t_node **a, t_node **b, int bit, int size, t_bench *bench)
 {
 	int	i;
 
 	i = 0;
 	while (i < size)
 	{
-		if ((((*a)->value >> bit) & 1) == 1)
-			ft_ra(a);
+		if ((((*a)->index >> bit) & 1) == 1)
+			ft_ra(a, bench);
 		else
-			ft_pb(b, a);
+			ft_pb(b, a, bench);
 		i++;
 	}
 	while (*b)
-		ft_pa(a, b);
+		ft_pa(a, b, bench);
 }
 
-void	ft_complex_algo(t_node **a, t_node **b)
+void	ft_complex_algo(t_node **a, t_node **b, t_bench *bench)
 {
 	int	bit;
 	int	max_bits;
@@ -150,12 +118,12 @@ void	ft_complex_algo(t_node **a, t_node **b)
 	size = count_stack(a);
 	if (size <= 1)
 		return ;
-	normalize_to_indices(a);
+	normalize_to_indices(a, size);
 	max_bits = get_max_bits(size);
 	bit = 0;
 	while (bit < max_bits)
 	{
-		process_bit(a, b, bit, size);
+		process_bit(a, b, bit, size, bench);
 		bit++;
 	}
 }
