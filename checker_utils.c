@@ -6,7 +6,7 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 15:27:32 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/24 11:57:07 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/24 15:38:17 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,86 +59,65 @@ char	*extract_number(char *s, int idx)
 	return (NULL);
 }
 
-int	parse_string(char *str)
+int	user_input(t_node **a, t_node **b, int *eof)
 {
-	int		i;
-	int		nb;
-	int		count;
-	char	*num;
+	char	*line;
+	int		ret;
 
-	count = count_numbers(str);
-	i = 0;
-	while (i < count)
+	ret = read_line(&line);
+	if (ret == 0)
 	{
-		num = extract_number(str, i);
-		if (!num || !is_number(num))
-		{
-			ft_putstr_fd("Error\n", 2);
-			free(num);
+		*eof = 1;
+		return (0);
+	}
+	if (ret == -1)
+		return (-1);
+	move_checker(a, b, line);
+	free(line);
+	return (1);
+}
+
+static int	fill_stack_a(int ac, char **av, t_node **a)
+{
+	int	i;
+	int	nb;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (!is_number(av[i]))
 			return (-1);
-		}
-		nb = ft_atoi(num);
-		free(num);
+		nb = ft_atoi(av[i]);
+		add_back(a, new_node(nb));
 		i++;
 	}
 	return (0);
 }
 
-
-
-int user_input(t_node **a, t_node **b, int *eof)
+int	parse_checker_args(int ac, char **av)
 {
-    char *line;
-    int ret;
+	t_node	*a;
+	t_node	*b;
+	int		input;
+	int		eof;
 
-    ret = read_line(&line);
-    
-    if (ret == 0)
-    {
-        *eof = 1;
-        return (0);
-    }
-    if (ret == -1)
-        return (-1);
-
-    move_checker(a, b, line);
-    free(line);
-    return (1);
-}
-
-int parse_checker_args(int ac, char **av)
-{
-    int i;
-    int nb;
-    t_node *a;
-    t_node *b;
-    int input;
-    int eof;
-
-    a = NULL;
-    b = NULL;
-    i = 1;
-    while (i < ac)
-    {
-        if (!is_number(av[i]))
-        {
-            ft_putstr_fd("Error\n", 2);
-            return (-1);
-        }
-        nb = ft_atoi(av[i]);
-        add_back(&a, new_node(nb));
-        i++;
-    }
-    eof = 0;
-    while (!eof)
-    {
-        input = user_input(&a, &b, &eof);
-        if (input == -1)
-        {
-            ft_putstr_fd("Error\n", 2);
-            return (-1);
-        }
-    }
-    stack_in_order(&a, &b);
-    return (0);
+	a = NULL;
+	b = NULL;
+	if (fill_stack_a(ac, av, &a) == -1)
+	{
+		ft_putstr_fd("Error\n", 2);
+		return (free_stack(&a), -1);
+	}
+	eof = 0;
+	while (!eof)
+	{
+		input = user_input(&a, &b, &eof);
+		if (input == -1)
+		{
+			ft_putstr_fd("Error\n", 2);
+			return (free_stack(&a), free_stack(&b), -1);
+		}
+	}
+	stack_in_order(&a, &b);
+	return (free_stack(&a), free_stack(&b), 0);
 }
