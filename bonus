@@ -11,7 +11,7 @@ INCLUDES = -I. -I$(LIBFT_DIR)
 
 SRC = checker.c main_utils.c checker_utils.c checker_push.c \
 checker_rotate_reverse.c checker_rotation.c checker_swap.c move_checker.c \
-hashset_utils.c stack_in_order.c hashset.c push_swap_utilities.c checker_read_line.c 
+hashset_utils.c stack_in_order.c hashset.c push_swap_utilities.c checker_read_line.c common_utils.c
 
 OBJ = $(SRC:.c=.o)
 

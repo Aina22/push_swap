@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 17:51:08 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/24 15:10:19 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:11:34 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ void	rra(t_node **a);
 void	stack_in_order(t_node **a, t_node **b);
 void	print_stack(t_node *stack);
 int		read_line(char **line);
+void	free_stack(t_node **stack);
+void	print_error(void);
 
 #endif
