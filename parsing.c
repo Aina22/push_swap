@@ -6,7 +6,7 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 13:26:32 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/21 13:28:14 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/23 16:16:23 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,46 +71,46 @@ int	parse_str(char *str, t_node **a)
 	return (1);
 }
 
-int	parse_args(int ac, char **av, int start_idx, t_node **a)
+static int	count_in_str(char *str)
 {
-	int	i;
+	int	count;
+	int	j;
 
-	i = start_idx;
-	while (i < ac)
+	count = 0;
+	j = 0;
+	while (str[j])
 	{
-		if (!parse_str(av[i], a))
-			return (0);
-		i++;
+		while (str[j] == ' ')
+			j++;
+		if (ft_isdigit(str[j]) || (str[j] == '-' && ft_isdigit(str[j + 1])))
+		{
+			count++;
+			if (str[j] == '-')
+				j++;
+			while (ft_isdigit(str[j]))
+				j++;
+		}
+		else if (str[j])
+			return (-1);
 	}
-	return (1);
+	return (count);
 }
 
 int	count_total_numbers(int ac, char **av, int start_idx)
 {
-	int	count;
+	int	total_count;
+	int	current_count;
 	int	i;
-	int	j;
 
-	count = 0;
-	i = start_idx - 1;
-	while (++i < ac)
+	total_count = 0;
+	i = start_idx;
+	while (i < ac)
 	{
-		j = 0;
-		while (av[i][j])
-		{
-			while (av[i][j] == ' ')
-				j++;
-			if (ft_isdigit(av[i][j]) || av[i][j] == '-')
-			{
-				count++;
-				if (av[i][j] == '-')
-					j++;
-				while (ft_isdigit(av[i][j]))
-					j++;
-			}
-			else if (av[i][j])
-				return (-1);
-		}
+		current_count = count_in_str(av[i]);
+		if (current_count == -1)
+			return (-1);
+		total_count += current_count;
+		i++;
 	}
-	return (count);
+	return (total_count);
 }

@@ -6,10 +6,9 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:06:16 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 11:06:17 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/23 15:36:05 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "push_swap.h"
 #include "bench.h"
@@ -46,4 +45,20 @@ void	exec_algo(char *flag, t_node **a, t_node **b, t_bench *bench)
 		ft_complex_algo(a, b, bench);
 	else
 		ft_adaptive_algo(a, b, bench);
+}
+
+void	ft_rrb(t_node **b, t_bench *bench)
+{
+	ft_rra_rrb(b);
+	write(1, "rrb\n", 4);
+	if (bench)
+		bench_rrb(bench);
+}
+
+void	ft_rra(t_node **a, t_bench *bench)
+{
+	ft_rra_rrb(a);
+	write(1, "rra\n", 4);
+	if (bench)
+		bench_rra(bench);
 }

@@ -6,7 +6,7 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:05:57 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 11:05:59 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/23 15:35:46 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,4 @@ void	ft_rb(t_node **b, t_bench *bench)
 	write(1, "rb\n", 3);
 	if (bench)
 		bench_rb(bench);
-}
-
-void	ft_rrb(t_node **b, t_bench *bench)
-{
-	ft_rra_rrb(b);
-	write(1, "rrb\n", 4);
-	if (bench)
-		bench_rrb(bench);
-}
-
-void	ft_rra(t_node **a, t_bench *bench)
-{
-	ft_rra_rrb(a);
-	write(1, "rra\n", 4);
-	if (bench)
-		bench_rra(bench);
 }

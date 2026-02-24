@@ -6,11 +6,12 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:10:03 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 11:10:05 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:20:27 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bench.h"
+#include "push_swap.h"
 
 void	init_bench(t_bench *bench)
 {
@@ -29,24 +30,17 @@ void	init_bench(t_bench *bench)
 
 int	get_total_ops(t_bench *bench)
 {
-	return (bench->sa + bench->sb + bench->ss + bench->pa + bench->pb
-		+ bench->ra + bench->rb + bench->rr + bench->rra + bench->rrb
-		+ bench->rrr);
+	int	total;
+
+	total = bench->sa + bench->sb + bench->ss;
+	total += bench->pa + bench->pb;
+	total += bench->ra + bench->rb + bench->rr;
+	total += bench->rra + bench->rrb + bench->rrr;
+	return (total);
 }
 
-void	print_bench(t_bench *bench, float disorder, char *strategy)
+static void	print_bench_details(t_bench *bench)
 {
-	ft_putstr_fd("[bench] disorder: ", 2);
-	ft_putnbr_fd((int)(disorder * 100), 2);
-	ft_putstr_fd(".", 2);
-	ft_putnbr_fd((int)((disorder * 100 - (int)(disorder * 100)) * 100), 2);
-	ft_putstr_fd("%\n", 2);
-	ft_putstr_fd("[bench] strategy: ", 2);
-	ft_putstr_fd(strategy, 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("[bench] total_ops:  ", 2);
-	ft_putnbr_fd(get_total_ops(bench), 2);
-	ft_putstr_fd("\n", 2);
 	ft_putstr_fd("[bench] sa: ", 2);
 	ft_putnbr_fd(bench->sa, 2);
 	ft_putstr_fd(" sb: ", 2);
@@ -57,8 +51,7 @@ void	print_bench(t_bench *bench, float disorder, char *strategy)
 	ft_putnbr_fd(bench->pa, 2);
 	ft_putstr_fd(" pb: ", 2);
 	ft_putnbr_fd(bench->pb, 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("[bench] ra: ", 2);
+	ft_putstr_fd("\n[bench] ra: ", 2);
 	ft_putnbr_fd(bench->ra, 2);
 	ft_putstr_fd(" rb: ", 2);
 	ft_putnbr_fd(bench->rb, 2);
@@ -73,57 +66,23 @@ void	print_bench(t_bench *bench, float disorder, char *strategy)
 	ft_putstr_fd("\n", 2);
 }
 
-void	bench_sa(t_bench *bench)
+void	print_bench(t_bench *bench, float disorder, char *strategy)
 {
-	bench->sa++;
-}
+	int	int_part;
+	int	dec_part;
 
-void	bench_sb(t_bench *bench)
-{
-	bench->sb++;
-}
-
-void	bench_ss(t_bench *bench)
-{
-	bench->ss++;
-}
-
-void	bench_pa(t_bench *bench)
-{
-	bench->pa++;
-}
-
-void	bench_pb(t_bench *bench)
-{
-	bench->pb++;
-}
-
-void	bench_ra(t_bench *bench)
-{
-	bench->ra++;
-}
-
-void	bench_rb(t_bench *bench)
-{
-	bench->rb++;
-}
-
-void	bench_rr(t_bench *bench)
-{
-	bench->rr++;
-}
-
-void	bench_rra(t_bench *bench)
-{
-	bench->rra++;
-}
-
-void	bench_rrb(t_bench *bench)
-{
-	bench->rrb++;
-}
-
-void	bench_rrr(t_bench *bench)
-{
-	bench->rrr++;
+	int_part = (int)(disorder * 100);
+	dec_part = (int)((disorder * 100 - int_part) * 100);
+	ft_putstr_fd("[bench] disorder: ", 2);
+	ft_putnbr_fd(int_part, 2);
+	ft_putstr_fd(".", 2);
+	if (dec_part < 10)
+		ft_putstr_fd("0", 2);
+	ft_putnbr_fd(dec_part, 2);
+	ft_putstr_fd("%\n[bench] strategy: ", 2);
+	ft_putstr_fd(strategy, 2);
+	ft_putstr_fd("\n[bench] total_ops:  ", 2);
+	ft_putnbr_fd(get_total_ops(bench), 2);
+	ft_putstr_fd("\n", 2);
+	print_bench_details(bench);
 }

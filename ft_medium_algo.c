@@ -6,10 +6,9 @@
 /*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:05:38 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 11:05:39 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/23 15:18:59 by yvoandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "push_swap.h"
 #include "bench.h"
@@ -83,19 +82,15 @@ static void	push_back_to_a(t_node **a, t_node **b, t_bench *bench)
 	}
 }
 
-void	ft_medium_algo(t_node **a, t_node **b, t_bench *bench)
+static void	push_to_b(t_node **a, t_node **b, int *arr, t_bench *bench)
 {
-	int	*arr;
-	int	size;
 	int	i;
 	int	chunk;
+	int	size;
 
-	size = count_stack(a);
-	arr = create_sort_array(size, *a);
-	if (!arr)
-		return ;
 	i = 0;
 	chunk = 15;
+	size = count_stack(a);
 	while (*a)
 	{
 		if ((*a)->value <= arr[i])
@@ -112,6 +107,18 @@ void	ft_medium_algo(t_node **a, t_node **b, t_bench *bench)
 		else
 			ft_ra(a, bench);
 	}
+}
+
+void	ft_medium_algo(t_node **a, t_node **b, t_bench *bench)
+{
+	int	*arr;
+	int	size;
+
+	size = count_stack(a);
+	arr = create_sort_array(size, *a);
+	if (!arr)
+		return ;
+	push_to_b(a, b, arr, bench);
 	push_back_to_a(a, b, bench);
 	free(arr);
 }
