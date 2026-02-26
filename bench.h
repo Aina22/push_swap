@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bench.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:09:55 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 11:24:00 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:54:56 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ void	bench_rr(t_bench *bench);
 void	bench_rra(t_bench *bench);
 void	bench_rrb(t_bench *bench);
 void	bench_rrr(t_bench *bench);
+void	run_benchmark(t_node **a, t_node **b, char *flag);
+char	*get_strategy_name(char *flag, float disorder);
 
 #endif

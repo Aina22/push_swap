@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:06:11 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 15:20:16 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:47:56 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

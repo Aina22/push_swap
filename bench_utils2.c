@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bench_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvoandri <yvoandri@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 17:20:00 by yvoandri          #+#    #+#             */
-/*   Updated: 2026/02/23 17:20:21 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:57:32 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 10:39:16 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/19 13:24:30 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:50:11 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

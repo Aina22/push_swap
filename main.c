@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:06:21 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 16:49:15 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:51:44 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	init_vars(int ac, char **av, char **flag, int *bench_mode)
 	*flag = NULL;
 	*bench_mode = 0;
 	i = 1;
-	if (ac < 2)
-		return (print_error(), -1);
+	if (ac <= 1)
+		return (0);
 	if (!ft_strcmp(av[1], "--bench"))
 	{
 		*bench_mode = 1;
@@ -37,40 +37,6 @@ static int	init_vars(int ac, char **av, char **flag, int *bench_mode)
 	if (i >= ac)
 		return (print_error(), -1);
 	return (i);
-}
-
-static char	*get_strategy_name(char *flag, float disorder)
-{
-	if (flag)
-	{
-		if (!ft_strcmp(flag, "--simple"))
-			return ("Simple / O(n²)");
-		if (!ft_strcmp(flag, "--medium"))
-			return ("Medium / O(n√n)");
-		if (!ft_strcmp(flag, "--complex"))
-			return ("Complex / O(n log n)");
-	}
-	if (disorder < 0.2)
-		return ("Adaptive (Simple) / O(n²)");
-	if (disorder >= 0.2 && disorder < 0.5)
-		return ("Adaptive (Medium) / O(n√n)");
-	return ("Adaptive (Complex) / O(n log n)");
-}
-
-static void	run_benchmark(t_node **a, t_node **b, char *flag)
-{
-	t_bench	bench;
-	float	disorder;
-	char	*strategy;
-
-	init_bench(&bench);
-	disorder = compute_disorder(a);
-	strategy = get_strategy_name(flag, disorder);
-	if (flag)
-		exec_algo(flag, a, b, &bench);
-	else
-		ft_adaptive_algo(a, b, &bench);
-	print_bench(&bench, disorder, strategy);
 }
 
 static int	parse_and_check(int ac, char **av, int i, t_node **a)
@@ -93,6 +59,23 @@ static int	parse_and_check(int ac, char **av, int i, t_node **a)
 	return (num_count);
 }
 
+static int	handle_no_args(int i, int ac)
+{
+	if (i == 0 && ac <= 1)
+		return (1);
+	return (0);
+}
+
+static void	run_normal_mode(t_node **a, t_node **b, char *flag, int bench_mode)
+{
+	if (bench_mode)
+		run_benchmark(a, b, flag);
+	else if (flag)
+		exec_algo(flag, a, b, NULL);
+	else
+		ft_adaptive_algo(a, b, NULL);
+}
+
 int	main(int ac, char **av)
 {
 	t_node	*a;
@@ -104,19 +87,16 @@ int	main(int ac, char **av)
 	a = NULL;
 	b = NULL;
 	i = init_vars(ac, av, &flag, &bench_mode);
+	if (handle_no_args(i, ac))
+		return (0);
 	if (i == -1 || parse_and_check(ac, av, i, &a) <= 0)
 		return (1);
 	if (is_sorted(a))
-		return (free_stack(&a), 0);
-	if (bench_mode)
-		run_benchmark(&a, &b, flag);
-	else
 	{
-		if (flag)
-			exec_algo(flag, &a, &b, NULL);
-		else
-			ft_adaptive_algo(&a, &b, NULL);
+		free_stack(&a);
+		return (0);
 	}
+	run_normal_mode(&a, &b, flag, bench_mode);
 	free_stack(&a);
 	free_stack(&b);
 	return (0);

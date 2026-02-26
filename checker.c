@@ -6,7 +6,7 @@
 /*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 15:25:52 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/26 08:50:47 by ainadan          ###   ########.fr       */
+/*   Updated: 2026/02/26 17:03:39 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ int	parse_string(char *str)
 int	main(int ac, char **av)
 {
 	if (ac < 2)
-	{
-		ft_putstr_fd("Error\n", 2);
-		return (-1);
-	}
+		return (0);
 	if (ac == 2)
 		return (parse_string(av[1]));
 	return (parse_checker_args(ac, av));

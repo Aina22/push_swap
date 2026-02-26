@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_adaptive_algo.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:05:25 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 11:05:28 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:50:19 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
