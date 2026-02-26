@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 15:27:32 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/24 15:38:17 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/26 08:45:25 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
