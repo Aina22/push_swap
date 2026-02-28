@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:07:10 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 11:08:31 by ainradan         ###   ########.fr       */
+/*   Updated: 2026/02/28 11:22:06 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

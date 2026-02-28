@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general_utls.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ainradan <ainradan@student.42antananari    +#+  +:+       +#+        */
+/*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:06:16 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/23 15:36:05 by yvoandri         ###   ########.fr       */
+/*   Updated: 2026/02/28 10:35:43 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

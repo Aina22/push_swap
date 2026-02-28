@@ -6,12 +6,12 @@
 /*   By: ainadan <ainradan@student.42antananariv    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 11:06:11 by ainradan          #+#    #+#             */
-/*   Updated: 2026/02/26 16:47:56 by ainadan          ###   ########.fr       */
+/*   Updated: 2026/02/28 11:25:26 by ainadan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
 #include "bench.h"
+#include "push_swap.h"
 
 void	ft_sa_sb(t_node **stack)
 {
@@ -28,7 +28,8 @@ void	ft_ss(t_node **stack_a, t_node **stack_b, t_bench *bench)
 {
 	ft_sa_sb(stack_a);
 	ft_sa_sb(stack_b);
-	write(1, "ss\n", 3);
+	if (!bench)
+		write(1, "ss\n", 3);
 	if (bench)
 		bench_ss(bench);
 }
@@ -36,7 +37,8 @@ void	ft_ss(t_node **stack_a, t_node **stack_b, t_bench *bench)
 void	ft_sa(t_node **a, t_bench *bench)
 {
 	ft_sa_sb(a);
-	write(1, "sa\n", 3);
+	if (!bench)
+		write(1, "sa\n", 3);
 	if (bench)
 		bench_sa(bench);
 }
@@ -44,7 +46,8 @@ void	ft_sa(t_node **a, t_bench *bench)
 void	ft_sb(t_node **b, t_bench *bench)
 {
 	ft_sa_sb(b);
-	write(1, "sb\n", 3);
+	if (!bench)
+		write(1, "sb\n", 3);
 	if (bench)
 		bench_sb(bench);
 }
