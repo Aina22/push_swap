@@ -183,3 +183,136 @@ For this algorithm we use **Radix sort adaptation method**, **Quick sort adaptat
 ## Goal of this Project
 * The goal of this project is the discovery of all sorting methods like **Simple min/max extraction methode**, **Chunk-based sorting method**, **Radix sort adaptation method**, **Quick sort adaptation with stack partitioning**, **Binary indexed tree approaches**.
 * Learn to handle a real project like **push_swap**(Push_swap is already a litle software application).
+## Live coding 
+
+## README fosika Hints count_only
+
+## Changements nécessaires
+
+### 1. **validation.c** - Ajouter le nouveau flag
+
+```c
+int	is_valid_flag(char *arg)
+{
+	if (!ft_strcmp(arg, "--simple") || !ft_strcmp(arg, "--medium"))
+		return (1);
+	if (!ft_strcmp(arg, "--complex") || !ft_strcmp(arg, "--adaptive"))
+		return (1);
+	if (!ft_strcmp(arg, "--count_ops"))  // AJOUTER CECI
+		return (1);
+	return (0);
+}
+```
+
+### 2. **main.c** - Modifier l'initialisation et la logique
+
+```c
+static int	init_vars(int ac, char **av, char **flag, int *bench_mode, int *count_ops_only)
+{
+	int	i;
+
+	*flag = NULL;
+	*bench_mode = 0;
+	*count_ops_only = 0;  // AJOUTER CECI
+	i = 1;
+	if (ac <= 1)
+		return (0);
+	if (!ft_strcmp(av[1], "--bench"))
+	{
+		*bench_mode = 1;
+		i = 2;
+		if (i < ac && is_valid_flag(av[i]))
+			*flag = av[i++];
+	}
+	else if (!ft_strcmp(av[1], "--count_ops"))  // AJOUTER CE BLOC
+	{
+		*count_ops_only = 1;
+		i = 2;
+		if (i < ac && is_valid_flag(av[i]))
+			*flag = av[i++];
+	}
+	else if (is_valid_flag(av[1]))
+	{
+		*flag = av[1];
+		i = 2;
+	}
+	if (i >= ac)
+		return (print_error(), -1);
+	return (i);
+}
+```
+
+### 3. **main.c** - Modifier `run_normal_mode` et `main`
+
+```c
+static void	run_normal_mode(t_node **a, t_node **b, char *flag, int bench_mode, int count_ops_only)
+{
+	t_bench	bench;  // AJOUTER CECI
+
+	if (bench_mode)
+		run_benchmark(a, b, flag);
+	else if (count_ops_only)  // AJOUTER CE BLOC
+	{
+		init_bench(&bench);
+		if (flag)
+			exec_algo(flag, a, b, &bench);
+		else
+			ft_adaptive_algo(a, b, &bench);
+		ft_putnbr_fd(get_total_ops(&bench), 1);
+		ft_putstr_fd("\n", 1);
+	}
+	else if (flag)
+		exec_algo(flag, a, b, NULL);
+	else
+		ft_adaptive_algo(a, b, NULL);
+}
+
+int	main(int ac, char **av)
+{
+	t_node	*a;
+	t_node	*b;
+	char	*flag;
+	int		i;
+	int		bench_mode;
+	int		count_ops_only;  // AJOUTER CECI
+
+	a = NULL;
+	b = NULL;
+	i = init_vars(ac, av, &flag, &bench_mode, &count_ops_only);  // MODIFIER
+	if (handle_no_args(i, ac))
+		return (0);
+	if (i == -1 || parse_and_check(ac, av, i, &a) <= 0)
+		return (1);
+	if (is_sorted(a))
+	{
+		free_stack(&a);
+		return (0);
+	}
+	run_normal_mode(&a, &b, flag, bench_mode, count_ops_only);  // MODIFIER
+	free_stack(&a);
+	free_stack(&b);
+	return (0);
+}
+```
+
+### 4. **push_swap.h** - Mettre à jour le prototype
+
+```c
+// Remplacer l'ancien prototype de init_vars si présent, ou ajouter :
+int		is_valid_flag(char *arg);
+// Et s'assurer que ces prototypes sont présents :
+void	init_bench(t_bench *bench);
+int		get_total_ops(t_bench *bench);
+```
+
+---
+
+## Résumé des modifications
+
+| Fichier | Changement |
+|---------|-----------|
+| `validation.c` | Ajouter `--count_ops` dans `is_valid_flag()` |
+| `main.c` | Ajouter paramètre `count_ops_only`, modifier `init_vars()` et `run_normal_mode()` |
+| `push_swap.h` | Vérifier les prototypes (déjà présents normalement) |
+
+Le mode `--count_ops` fonctionne comme `--bench` mais n'affiche que le nombre total d'opérations (via `get_total_ops()`) sans les détails ni le pourcentage de désordre.
